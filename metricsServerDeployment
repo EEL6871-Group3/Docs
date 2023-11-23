@@ -1,0 +1,9 @@
+1) kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+2) kubectl edit deployment metrics-server -n kube-system
+3) Add below lines in the deployment files parallely to args
+        command: 
+        - /metrics-server
+        - --kubelet-insecure-tls
+        - --kubelet-preferred-address-types=InternalIP
+4) Check kubectl top pods after sometime        
+
