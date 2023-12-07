@@ -1,8 +1,8 @@
 # Fluent Bit Integration Guide
 
-This guide outlines the steps to integrate Fluent Bit for log management in your Kubernetes environment, focusing on middleware and local-controller logs.
+This guide outlines the steps to integrate Fluent Bit for log management in Kubernetes environment, focusing on middleware, local-controller and container logs.
 
-## 1. Introduction to Logging
+## Introduction to Logging
 
 - **Categories**: INFO, DEBUG, ERROR, and CRITICAL.
 - **Implementation**: Logging statements added in both the controller and middleware.
@@ -11,19 +11,16 @@ This guide outlines the steps to integrate Fluent Bit for log management in your
 
 ## 2. Setting Up Fluent Bit
 
-Install and set up Fluent Bit using Helm with the following commands:
-
-```bash
-# Install Helm
+- **Install Helm**
 curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
-# Add the Fluent Helm Charts repo
+- **Add the Fluent Helm Charts repo**
 helm repo add fluent https://fluent.github.io/helm-charts
 
-# Install default Fluent Bit chart
+- **Install default Fluent Bit chart**
 helm upgrade --install fluent-bit fluent/fluent-bit
 
-# Modify the default Fluent Bit ConfigMap to collect specific logs:
+- **Modify the default Fluent Bit ConfigMap to collect specific logs:**
 [INPUT]
    Name tail
    Path /home/k8s-user/middleware/out.log
@@ -50,7 +47,7 @@ helm upgrade --install fluent-bit fluent/fluent-bit
     Json_date_key timestamp
     Json_date_format iso8601
 
-# Update the daemonset.yaml to include necessary volume mounts:
+- **Update the daemonset.yaml to include necessary volume mounts:**
 - mountPath: /home/k8s-user/middleware 
   name: middleware-logs
   readOnly: true
@@ -69,9 +66,9 @@ helm upgrade --install fluent-bit fluent/fluent-bit
     type: “”
     name: localcontroller-logs
 
-# Apply the updated DaemonSet configuration with Kubernetes:
+- **Apply the updated DaemonSet configuration with Kubernetes:**
 kubectl apply -f fluent-bit-ds.yaml
 
-# Check Fluent Bit pods and their logs:
+- **Check Fluent Bit pods and their logs:**
 kubectl get pods -n default
 kubectl logs <fluent-bit-pod-name> -n default
