@@ -6,7 +6,7 @@
 4. [Global Controller](#global-controller)
 5. [Logging (Bonus Task)](#logging-(bonus-task))
 
-# 1. Job Queue
+# Job Queue
 
 ## Overview
 This Python script generates stress-ng jobs with random parameters based on specified ranges. The generated jobs are appended to a file, creating a job queue for stress testing.
@@ -26,7 +26,7 @@ python job_generation.py 0 5 0 5 0 4 10 30 30
 ```
 The generated stress-ng commands will be appended to the job_list.txt file by default.
 
-# 2. Middleware
+# Middleware
 Middleware for Kubernetes Node Scaling and Stress Testing
 ## Overview
 This middleware is designed to facilitate dynamic scaling of nodes in a Kubernetes cluster and stress testing individual nodes, when instructed by the controller. The primary functionalities include:
@@ -237,7 +237,7 @@ python3 middleware_api.py
 ```
 This will make api go live on http://128.110.217.71:5001 and http://127.0.0.1:5001
 
-# 3. Local Controller
+# Local Controller
 
 ## Components
 The controller has these components:
@@ -293,7 +293,7 @@ create_pod_api = "http://128.110.217.71:5001/pod"  # POST
 # run
 python3 local_controller.py
 
-# 4. Global Controller
+# Global Controller
 
 ## Components
 * CPU sampler
@@ -352,7 +352,7 @@ job_file_name = "job_list.txt"
 `Python3 global_controller.py`.
 Notice that the `job_list.txt` file must exists in the working directory where the controller is run.
 
-# 5. Logging (Bonus Task)
+# Logging (Bonus Task)
 
 # Fluent Bit Integration Guide
 
