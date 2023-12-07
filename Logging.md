@@ -12,13 +12,19 @@ This guide outlines the steps to integrate Fluent Bit for log management in Kube
 ## 2. Setting Up Fluent Bit
 
 - **Install Helm**
+```bash
 curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+```bash
 
 - **Add the Fluent Helm Charts repo**
+```bash
 helm repo add fluent https://fluent.github.io/helm-charts
+```bash
 
 - **Install default Fluent Bit chart**
+```bash
 helm upgrade --install fluent-bit fluent/fluent-bit
+```bash
 
 - **Modify the default Fluent Bit ConfigMap to collect specific logs:**
 ```yaml
@@ -47,6 +53,7 @@ helm upgrade --install fluent-bit fluent/fluent-bit
     Format json
     Json_date_key timestamp
     Json_date_format iso8601
+```yaml
 
 - **Update the daemonset.yaml to include necessary volume mounts:**
 ```yaml
@@ -67,10 +74,15 @@ helm upgrade --install fluent-bit fluent/fluent-bit
     path: /home/k8s-user/local-controller
     type: “”
     name: localcontroller-logs
+```yaml
 
 - **Apply the updated DaemonSet configuration with Kubernetes:**
+```bash
 kubectl apply -f fluent-bit-ds.yaml
+```bash
 
 - **Check Fluent Bit pods and their logs:**
+```bash
 kubectl get pods -n default
 kubectl logs <fluent-bit-pod-name> -n default
+```bash
