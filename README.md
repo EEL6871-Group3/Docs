@@ -4,7 +4,7 @@
 2. [Middleware](#middleware)
 3. [Local Controller](#local-controller)
 4. [Global Controller](#global-controller)
-5. [Logging (Bonus Task)](#logging-(bonus-task))
+5. [Logging Bonus Task](#logging-bonus-task)
 
 # Job Queue
 
@@ -352,7 +352,7 @@ job_file_name = "job_list.txt"
 `Python3 global_controller.py`.
 Notice that the `job_list.txt` file must exists in the working directory where the controller is run.
 
-# Logging (Bonus Task)
+# Logging Bonus Task
 
 # Fluent Bit Integration Guide
 
