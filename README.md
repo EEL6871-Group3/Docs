@@ -405,6 +405,7 @@ helm upgrade --install fluent-bit fluent/fluent-bit
     Json_date_format iso8601
 ```
 - **Update the daemonset.yaml to include necessary volume mounts:**
+  ```yaml
 - mountPath: /home/k8s-user/middleware 
   name: middleware-logs
   readOnly: true
@@ -422,6 +423,7 @@ helm upgrade --install fluent-bit fluent/fluent-bit
     path: /home/k8s-user/local-controller
     type: “”
     name: localcontroller-logs
+```
 
 - **Apply the updated DaemonSet configuration with Kubernetes:**
 kubectl apply -f fluent-bit-ds.yaml
