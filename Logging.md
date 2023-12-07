@@ -11,6 +11,7 @@ This guide outlines the steps to integrate Fluent Bit for log management in Kube
 
 ## 2. Setting Up Fluent Bit
 
+```bash
 - **Install Helm**
 curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
@@ -21,6 +22,7 @@ helm repo add fluent https://fluent.github.io/helm-charts
 helm upgrade --install fluent-bit fluent/fluent-bit
 
 - **Modify the default Fluent Bit ConfigMap to collect specific logs:**
+```yaml
 [INPUT]
    Name tail
    Path /home/k8s-user/middleware/out.log
@@ -48,6 +50,7 @@ helm upgrade --install fluent-bit fluent/fluent-bit
     Json_date_format iso8601
 
 - **Update the daemonset.yaml to include necessary volume mounts:**
+```yaml
 - mountPath: /home/k8s-user/middleware 
   name: middleware-logs
   readOnly: true
