@@ -1,4 +1,4 @@
-# Readme file for whole project.
+# Readme file for the whole project.
 
 1. [Job Queue](#job-queue)
 2. [Middleware](#middleware)
