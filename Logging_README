@@ -1,0 +1,24 @@
+# Fluent Bit Integration Guide
+
+This guide outlines the steps to integrate Fluent Bit for log management in your Kubernetes environment, focusing on middleware and local-controller logs.
+
+## 1. Introduction to Logging
+
+- **Categories**: INFO, DEBUG, ERROR, and CRITICAL.
+- **Implementation**: Logging statements added in both the controller and middleware.
+- **Logging Level**: Set to DEBUG for comprehensive log collection.
+- **Log Files**: Individual `out.log` files for middleware and controller.
+
+## 2. Setting Up Fluent Bit
+
+Install and set up Fluent Bit using Helm with the following commands:
+
+```bash
+# Install Helm
+curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+# Add the Fluent Helm Charts repo
+helm repo add fluent https://fluent.github.io/helm-charts
+
+# Install default Fluent Bit chart
+helm upgrade --install fluent-bit fluent/fluent-bit
