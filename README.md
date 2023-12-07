@@ -377,6 +377,7 @@ helm repo add fluent https://fluent.github.io/helm-charts
 helm upgrade --install fluent-bit fluent/fluent-bit
 
 - **Modify the default Fluent Bit ConfigMap to collect specific logs:**
+```yaml
 [INPUT]
    Name tail
    Path /home/k8s-user/middleware/out.log
@@ -402,7 +403,7 @@ helm upgrade --install fluent-bit fluent/fluent-bit
     Format json
     Json_date_key timestamp
     Json_date_format iso8601
-
+```
 - **Update the daemonset.yaml to include necessary volume mounts:**
 - mountPath: /home/k8s-user/middleware 
   name: middleware-logs
