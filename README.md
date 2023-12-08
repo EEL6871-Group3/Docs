@@ -312,45 +312,68 @@ Settings are at the start of the `global_controller.py` file
 
 ```Python
 # APIs
-get_nodes_api = "http://localhost:5001/nodes"
-start_node_api = "http://localhost:5001/start-node"
-delete_node_api = "http://localhost:5001/delete-node"
-cpu_api = "http://localhost:5001/cpu"
+get_nodes_api = "http://128.110.217.71:5001/nodes"
+start_node_api = "http://128.110.217.71:5001/start-node"
+delete_node_api = "http://128.110.217.71:5001/delete-node"
+cpu_api = "http://128.110.217.71:5001/cpu"
 
 # settings
 sample_time = 5  # every X seconds, save the CPU usage of each node
 loop_sleep_time = (
-    3  # every X seconds, based on the CPU usage, make a scaling up/down decision
+    5  # every X seconds, based on the CPU usage, make a scaling up/down decision
 )
-master_node = "k8s-master"
+master_node = "node0.group-3-project.ufl-eel6871-fa23-pg0.utah.cloudlab.us"
 worker_nodes = [
-    "k8s-worker1",
-    "k8s-worker2",
+    "node1.group-3-project.ufl-eel6871-fa23-pg0.utah.cloudlab.us",
+    "node2.group-3-project.ufl-eel6871-fa23-pg0.utah.cloudlab.us",
 ]  # list of the two workers, in the order of jobs assignemnt priority, e.g., job will be assigned to master node, if unable, to the worker1, then worker2
+
+node_url = {
+    master_node: "http://128.110.217.71:5004/",
+    worker_nodes[0]: "http://128.110.217.114:5004/",
+    worker_nodes[1]: "http://128.110.217.87:5004/",
+}
 node_job_api = {
-    "k8s-master": "http://localhost:5001/job",
-    "k8s-worker1": "http://localhost:5001/job",
-    "k8s-worker2": "http://localhost:5001/job",
+    master_node: node_url[master_node] + "job",
+    worker_nodes[0]: node_url[worker_nodes[0]] + "job",
+    worker_nodes[1]: node_url[worker_nodes[1]] + "job",
 }
 node_pod_api = {
-    "k8s-master": "http://localhost:5001/pod-num",
-    "k8s-worker1": "http://localhost:5001/pod-num",
-    "k8s-worker2": "http://localhost:5001/pod-num",
+    master_node: node_url[master_node] + "pod-num",
+    worker_nodes[0]: node_url[worker_nodes[0]] + "pod-num",
+    worker_nodes[1]: node_url[worker_nodes[1]] + "pod-num",
 }
+
 cpu_bar = 0.8
 number_cpu_data_used = (
-    6  # use the previous X number of cpu to see if we need to scale up
+    2  # use the previous X number of cpu to see if we need to scale up
 )
 node_start_delay = (
     30  # no scaling down decision in X seconds after a scaling up decision
 )
-job_assign_time = 15  # every X seconds, schedule a job
-job_file_name = "job_list.txt"
+job_assign_time = 5  # every X seconds, schedule a job
+job_file_name = "job_list.txt" # job queue file
+res_file = "global_controller.txt" # a file to store controller decisions(job assignement, scale up, scale down, error detection)
+node_num_file = "node.txt"  # store total number of nodes
+pod_num_file = "pod.txt"  # store total number of pods in the cluster
+cpu_file = "cpu.txt" # store cluster cpu
 ```
 
 ## run
 `Python3 global_controller.py`.
 Notice that the `job_list.txt` file must exists in the working directory where the controller is run.
+
+## output file
+output files can be set by the settings, and will be stored at those files
+```
+res_file = "global_controller.txt" # a file to store controller decisions(job assignement, scale up, scale down, error detection)
+node_num_file = "node.txt"  # store total number of nodes
+pod_num_file = "pod.txt"  # store total number of pods in the cluster
+cpu_file = "cpu.txt" # store cluster cpu
+```
+
+Additionaly, several "<node_name>.txt" will store the max pod for each node that started. The format will be "time, maxpod"
+
 
 # Logging Bonus Task
 
