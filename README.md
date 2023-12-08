@@ -274,24 +274,37 @@ job_file_name = "job_list.txt"
 cpu_res_file_name = "cpu.txt"
 max_pod_res_file_name = "maxpod.txt"
 job_list = []
-node_name = "k8s-master"
+node_name = "node0.group-3-project.ufl-eel6871-fa23-pg0.utah.cloudlab.us"
 cur_pod_id = 0
 max_pod_upperbound = 12
 job_delay = 15  # number of seconds that we believe a the CPU is changed after a job is started, i.e., we need to wait at least that time before we start the closed loop function
 read_jobs = False  # if read a job from a file and render the jobs
 
+
 # API
 cpu_api = "http://128.110.217.71:5001/cpu"
 pod_num_api = "http://128.110.217.71:5001/pod-num"  # GET
 create_pod_api = "http://128.110.217.71:5001/pod"  # POST
+
+# k values
+kp = -3.127
+ki = 3.1406
 ```
 
 ## API exposed
 
 `localhost:5004/job` POST, to add a new job to the local controller
+`localhost:5004/pod-num` GET, get the current number of pods running
+`localhost:5004/maxpod` GET, get the current maxpod
+`localhost:5004/start` POST, start the controller, needed when the global controller starts a node
+`localhost:5004/stop` POST, stop the controller, needed when the global controller deletes a node
+
 
 # run
 python3 local_controller.py
+
+Notice that if we want the local controller the read the job queue(for task 2), the `read_jobs` needs to be set to true. Then we need to call the `localhost:5004/start` API to start the controller.
+
 
 # Global Controller
 
